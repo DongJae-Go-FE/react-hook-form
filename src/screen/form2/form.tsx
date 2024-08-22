@@ -23,6 +23,7 @@ const Page: FC = () => {
   return (
     <Fragment>
       <div className="form">
+        <h2>api 통신 핸들링 모음</h2>
         <Form
           action="/api"
           control={control}

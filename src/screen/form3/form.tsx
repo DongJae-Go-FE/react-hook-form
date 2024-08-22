@@ -16,6 +16,7 @@ const Page: FC = () => {
   return (
     <Fragment>
       <div className="form">
+        <h2>provider 폼</h2>
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onSubmit)}>
             <Input />
