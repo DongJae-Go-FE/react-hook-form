@@ -1,18 +1,19 @@
 "use client";
 
-import { FC, Fragment } from "react";
-import {
-  useForm,
-  SubmitHandler,
-  FormProvider,
-  useFormContext,
-} from "react-hook-form";
+import { FC, Fragment, useState } from "react";
+import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
+
+import Input from "@/components/Input/Input";
 
 import "./style.css";
 
 const Page: FC = () => {
   const methods = useForm();
-  const onSubmit: SubmitHandler<any> = (data) => console.log(data);
+  const [value, setValue] = useState("");
+  const onSubmit: SubmitHandler<any> = (data) => {
+    console.log(data), setValue(data.test);
+  };
+
   return (
     <Fragment>
       <div className="form">
@@ -20,6 +21,7 @@ const Page: FC = () => {
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onSubmit)}>
             <Input />
+            <p>{value}</p>
             <input type="submit" />
           </form>
         </FormProvider>
@@ -29,8 +31,3 @@ const Page: FC = () => {
 };
 
 export default Page;
-
-function Input() {
-  const { register } = useFormContext();
-  return <input {...register("test")} />;
-}
