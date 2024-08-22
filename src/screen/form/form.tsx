@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
+
 import { FC } from "react";
-import { useForm, SubmitHandler, Controller, Form } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { components } from "@r114dev/rds";
 
 import CustumSelect from "@/components/Select";
@@ -18,19 +20,18 @@ enum Select {
   three = "3",
 }
 
-type Inputs = {
-  example: string;
-  exampleRequired: string;
+type FormInputItemType = {
+  common: string;
+  commonRequired: string;
   pattern: string;
   number: number;
   counter: Select;
   Age: number;
   rdsinput: string;
-  MyCheckbox: string;
-  firstName: string;
+  messageCustum: string;
   mail: string;
 };
-// input을 추가할 때 마다 타입을 추가한다.
+// input을 추가할 때 마다 타입을 추가한후 register에서 사용.
 
 const Page: FC = () => {
   const {
@@ -38,15 +39,16 @@ const Page: FC = () => {
     handleSubmit, //submit 함수
     watch, // 감지하는 함수
     formState: { errors }, // input에 따른 form 상태
-    control,
-    reset,
-  } = useForm<Inputs>({
+    control, // 외부 라이브러리 연동
+    reset, // 초기화 함수
+  } = useForm<FormInputItemType>({
     defaultValues: {
-      rdsinput: "RDS 인풋 추가및 기본값 설정",
+      rdsinput: "RDS 인풋 추가및 기본값 설정", // 초기값을 설정 할 수 있다.
     },
-  }); //useForm을 사용하여 typed을 input 만큼 지정을 해준다.
+  }); //useForm을 사용하여 type을 input 만큼 지정을 해준다.
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<FormInputItemType> = (data) =>
+    console.log(data);
 
   console.log("숫자인지 확인:::", watch("number"));
 
@@ -54,16 +56,16 @@ const Page: FC = () => {
     <div className="form">
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="1">기본</label>
-        <input id="1" defaultValue="기본" {...register("example")} />
+        <input id="1" defaultValue="기본" {...register("common")} />
 
         <label htmlFor="2">필수 에러 보여주기</label>
         <input
           id="2"
-          {...register("exampleRequired", { required: true })}
+          {...register("commonRequired", { required: true })}
           placeholder="필수"
         />
-        {errors.exampleRequired && (
-          <span style={{ color: "red", fontSize: 14 }}>필수다 멍청아</span>
+        {errors.commonRequired && (
+          <span style={{ color: "red", fontSize: 14 }}>필수임</span>
         )}
 
         <label htmlFor="3">pattern 으로 정규식</label>
@@ -100,24 +102,29 @@ const Page: FC = () => {
         />
         <label htmlFor="5">에러 타입으로 에러 메세지 핸들링</label>
         <input
-          {...register("firstName", { required: true })}
-          aria-invalid={errors.firstName ? "true" : "false"}
+          {...register("messageCustum", { required: true })}
+          aria-invalid={errors.messageCustum ? "true" : "false"}
         />
-        {errors.firstName?.type === "required" && <p role="alert">필수값</p>}
+        {errors.messageCustum?.type === "required" && (
+          <p style={{ color: "red", fontSize: 14 }}>필수값</p>
+        )}
 
         <label htmlFor="6">에러메세지 직접입력</label>
         <input
           id="6"
-          {...register("mail", { required: "Email Address is required" })}
+          {...register("mail", { required: "메일 없음" })}
           aria-invalid={errors.mail ? "true" : "false"}
         />
-        {errors.mail && <p role="alert">{errors.mail.message}</p>}
+        {errors.mail && (
+          <p style={{ color: "red", fontSize: 14 }}>{errors.mail.message}</p>
+        )}
 
         <input type="submit" />
         <button type="reset" onClick={() => reset()}>
           초기화
         </button>
       </form>
+      <Link href="/form2">2페이지</Link>
     </div>
   );
 };

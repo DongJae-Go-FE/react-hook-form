@@ -1,0 +1,18 @@
+.form {
+  @apply w-80 h-auto border mx-auto mt-40;
+
+  form {
+    @apply flex flex-col w-full h-full p-5 gap-4;
+
+    input {
+      @apply w-full h-10 border;
+
+      &:not([type="submit"]) {
+        @apply pl-4;
+      }
+      &[type="submit"] {
+        @apply mt-auto;
+      }
+    }
+  }
+}
