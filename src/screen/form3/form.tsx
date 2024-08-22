@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { FC, Fragment, useState } from "react";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 
@@ -25,6 +27,7 @@ const Page: FC = () => {
             <input type="submit" />
           </form>
         </FormProvider>
+        <Link href="/form4">4페이지</Link>
       </div>
     </Fragment>
   );
