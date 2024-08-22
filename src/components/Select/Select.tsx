@@ -5,6 +5,8 @@ import { SelectProps } from "./types";
 
 import "./style.css";
 
+//any 고민
+
 const Select = forwardRef<
   HTMLSelectElement,
   SelectProps & ReturnType<UseFormRegister<any>>
