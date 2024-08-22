@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { FC, Fragment } from "react";
+import { FC, Fragment, useEffect } from "react";
 import { useForm, Form } from "react-hook-form";
 
 import "./style.css";
@@ -16,9 +16,17 @@ const Page: FC = () => {
     progressive: true, //ssr만 가능하게
   });
 
-  const { control: control2, register: register2 } = useForm({
+  const {
+    control: control2,
+    register: register2,
+    setFocus,
+  } = useForm({
     progressive: true, //ssr만 가능하게
   });
+
+  useEffect(() => {
+    setFocus("test"); // 포커싱
+  }, [setFocus]);
 
   return (
     <Fragment>
@@ -42,6 +50,7 @@ const Page: FC = () => {
         </Form>
       </div>
       <div className="form">
+        <h2>api post 및 포커싱</h2>
         <Form
           control={control2}
           onSubmit={async ({ formData, data, formDataJson, event }) => {
